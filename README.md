@@ -3,5 +3,5 @@
 </p>
 
 #plantokei
-
+:sparkles: :floppy_disk: :herb: plants + arduino = moyashi + tamagotchi :herb: :floppy_disk:
 
