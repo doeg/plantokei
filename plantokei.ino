@@ -1,34 +1,8 @@
-/***************************************************
-  This is an example sketch for the Adafruit 1.8" SPI display.
-  This library works with the Adafruit 1.8" TFT Breakout w/SD card
-  ----> http://www.adafruit.com/products/358
-  as well as Adafruit raw 1.8" TFT display
-  ----> http://www.adafruit.com/products/618
- 
-  Check out the links above for our tutorials and wiring diagrams
-  These displays use SPI to communicate, 4 or 5 pins are required to
-  interface (RST is optional)
-  Adafruit invests time and resources providing this open source code,
-  please support Adafruit and open-source hardware by purchasing
-  products from Adafruit!
-
-  Written by Limor Fried/Ladyada for Adafruit Industries.
-  MIT license, all text above must be included in any redistribution
- ****************************************************/
-
-// For the breakout, you can use any (4 or) 5 pins
 #define sclk 4
 #define mosi 5
 #define cs   6
 #define dc   7
 #define rst  8  // you can also connect this to the Arduino reset
-
-//Use these pins for the shield!
-//#define sclk 13
-//#define mosi 11
-//#define cs   10
-//#define dc   8
-//#define rst  0  // you can also connect this to the Arduino reset
 
 #include <Adafruit_GFX.h>    // Core graphics library
 #include <Adafruit_ST7735.h> // Hardware-specific library
@@ -39,7 +13,7 @@
     #define F(string_literal) string_literal
 #endif
 
-// Option 1: use any pins but a little slower
+// Use low-speed display
 Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, mosi, sclk, rst);
 
 float p = 3.1415926;
@@ -48,7 +22,7 @@ void setup(void) {
   Serial.begin(9600);
   Serial.print("hello!");
   
-  tft.initR(INITR_GREENTAB); // initialize a ST7735R chip, green tab
+  tft.initR(INITR_BLACKTAB); 
 
   Serial.println("init");
 
