@@ -11,6 +11,13 @@ Plantokei is a golem made up of:
 - A simple [photocell](https://learn.adafruit.com/photocells/overview)
 - A plant! :3
 
+The following I/O is in the works:
+- Soil moisture
+- Nearby motion
+- Humidity and temperature
+- Photosynthetically active radiation (a.k.a. PAR)
+- Bluetooth/wifi/Xbee perhaps?
+
 ## Developing
 ### Easy Mode
 The easiest way to get going with Plantokei is to load up `plantokei.ino` in the
