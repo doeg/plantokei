@@ -9,6 +9,13 @@
 #include <Adafruit_ST7735.h> // Hardware-specific library
 #include <SPI.h>
 
+void setup();
+void loop();
+int getLightLevel();
+void initSuns();
+void printLumens(int lightLevel);
+void printSun(int i, bool fill);
+
 #if defined(__SAM3X8E__)
     #undef __FlashStringHelper::F(string_literal)
     #define F(string_literal) string_literal
@@ -28,11 +35,11 @@ int LINE_HEIGHT = 10; // pixels
 
 int LINE_SUNS = 10 * LINE_HEIGHT;
 
-void setup(void) {
+void setup() {
   Serial.begin(9600);
   Serial.println("hello!");
-  
-  tft.initR(INITR_BLACKTAB); 
+
+  tft.initR(INITR_BLACKTAB);
   tft.fillScreen(ST7735_BLACK);
   initSuns();
 }
@@ -63,7 +70,7 @@ void printLumens(int lightLevel) {
     if(hasFill != hadFill) {
       printSun(i, hasFill);
     }
-    
+
     SUN_FILLS[i-1] = hasFill;
   }
 }
