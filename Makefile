@@ -5,7 +5,9 @@ ARDUINO_DIR   = $(HOME)/Applications/Arduino.app/Contents/Java
 ARDMK_DIR     = $(realpath ./libraries/Arduino-Makefile)
 MONITOR_PORT  = /dev/cu.usb*
 BOARD_TAG     = uno
-ARDUINO_LIBS  = SPI
+
+ARDUINO_LIBS  = SPI Adafruit-GFX-Library Adafruit-ST7735-Library
+USER_LIB_PATH =  $(realpath ./libraries)
 
 MONITOR_BAUDRATE  = 9600
 
