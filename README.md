@@ -13,10 +13,11 @@ Plantokei is a golem made up of:
 
 ## Developing
 ### Easy Mode
-The easiest way to get going with Plantokei is to use the
+The easiest way to get going with Plantokei is to load up `plantokei.ino` in the
 [Arduino IDE](https://www.arduino.cc/en/Main/Software). You'll need to download
-the two libraries for the LCD screen, `Adafruit_GFX.zip` and `Adafruit_ST3775.zip`, available in [this helpful tutorial](http://www.tweaking4all.com/hardware/arduino/sainsmart-arduino-color-display/),
-which also includes instructions to install said libraries.
+the two libraries for the LCD screen, `Adafruit_GFX.zip` and `Adafruit_ST3775.zip`, available in [this helpful tutorial](http://www.tweaking4all.com/hardware/arduino/sainsmart-arduino-color-display/) along with instructions to install said libraries.
+
+
 
 ### Slightly-Less-Easy Mode
 TBD
