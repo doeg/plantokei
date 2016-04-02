@@ -38,8 +38,7 @@ git submodule init && git submodule update
 
 3. Make sure your Arduino is plugged in, then compile and upload the program:
 ```Bash
-$ make
-$ make upload
+$ make && make upload
 ```
 
 4. (Optional) Open up the serial monitor. To quit: `<^A+k>`
