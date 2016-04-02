@@ -1,5 +1,5 @@
 # For a list of all variables that can be overridden, see:
-# 		https://github.com/sudar/Arduino-Makefile/blob/master/arduino-mk-vars.md
+# 	https://github.com/sudar/Arduino-Makefile/blob/master/arduino-mk-vars.md
 
 ARDUINO_DIR = $(HOME)/Applications/Arduino.app/Contents/Java
 ARDMK_DIR = $(realpath ./libraries/Arduino-Makefile)
