@@ -17,7 +17,9 @@ The easiest way to get going with Plantokei is to load up `plantokei.ino` in the
 [Arduino IDE](https://www.arduino.cc/en/Main/Software). You'll need to download
 the two libraries for the LCD screen, `Adafruit_GFX.zip` and `Adafruit_ST3775.zip`, available in [this helpful tutorial](http://www.tweaking4all.com/hardware/arduino/sainsmart-arduino-color-display/) along with instructions to install said libraries.
 
-
-
 ### Slightly-Less-Easy Mode
-TBD
+If you're like me and you value text editor shortcuts over your own happiness,
+then congratulations! You can build and upload the plantokei source yourself.
+(Note that I am actively working on making this process suck less... in the meantime, sorry!)
+
+
