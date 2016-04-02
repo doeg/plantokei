@@ -1,3 +1,9 @@
-[submodule "Arduino-Makefile"]
-	path = Arduino-Makefile
+[submodule "libraries/Adafruit-ST7735-Library"]
+	path = libraries/Adafruit-ST7735-Library
+	url = git@github.com:adafruit/Adafruit-ST7735-Library.git
+[submodule "libraries/Adafruit-GFX-Library"]
+	path = libraries/Adafruit-GFX-Library
+	url = git@github.com:adafruit/Adafruit-GFX-Library.git
+[submodule "libraries/Arduino-Makefile"]
+	path = libraries/Arduino-Makefile
 	url = git@github.com:sudar/Arduino-Makefile.git

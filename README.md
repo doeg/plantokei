@@ -24,11 +24,6 @@ then congratulations! You can build and upload the plantokei source yourself.
 
 NOTE: plantokei's build process depends on the excellent Arduino-Makefile project. If you're on a system other than OS X or if these instructions don't work out of the box, check out the similarly great [Bare Arduino Project](https://github.com/ladislas/Bare-Arduino-Project) for instructions on setting up Arduino-Makefile for other systems like Linux and Windows.
 
-1. After cloning the plantokei repo, install the git submodules. This includes the
-Arduino-Makefile repo, which plantokei depends on.
-
-```
-git submodule init && git submodule update
-```
+1. After cloning the plantokei repo, install the git submodules. This includes the Arduino-Makefile dependency, as well as all of the Arduino libraries: `git submodule init && git submodule update`
 
 1.
