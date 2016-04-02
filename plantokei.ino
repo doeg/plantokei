@@ -17,8 +17,8 @@ void printLumens(int lightLevel);
 void printSun(int i, bool fill);
 
 #if defined(__SAM3X8E__)
-    #undef __FlashStringHelper::F(string_literal)
-    #define F(string_literal) string_literal
+  #undef __FlashStringHelper::F(string_literal)
+  #define F(string_literal) string_literal
 #endif
 
 // Use low-speed display
