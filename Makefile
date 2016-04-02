@@ -1,15 +1,15 @@
 # For a list of all variables that can be overridden, see:
 # 		https://github.com/sudar/Arduino-Makefile/blob/master/arduino-mk-vars.md
 
-ARDUINO_DIR   = $(HOME)/Applications/Arduino.app/Contents/Java
-ARDMK_DIR     = $(realpath ./libraries/Arduino-Makefile)
-MONITOR_PORT  = /dev/cu.usb*
-BOARD_TAG     = uno
+ARDUINO_DIR = $(HOME)/Applications/Arduino.app/Contents/Java
+ARDMK_DIR = $(realpath ./libraries/Arduino-Makefile)
 
-ARDUINO_LIBS  = SPI Adafruit-GFX-Library Adafruit-ST7735-Library
+ARDUINO_LIBS = SPI Adafruit-GFX-Library Adafruit-ST7735-Library
 USER_LIB_PATH =  $(realpath ./libraries)
 
-MONITOR_BAUDRATE  = 9600
+BOARD_TAG = uno
+MONITOR_PORT = /dev/cu.usb*
+MONITOR_BAUDRATE = 9600
 
 AVR_TOOLS_DIR = /usr/local
 AVRDUDE = /usr/local/bin/avrdude
