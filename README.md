@@ -3,6 +3,7 @@
 </p>
 <p align="center">:sparkles: :floppy_disk: :herb: <b>プランとけい</b> // <i>plantokei</i> :herb: :floppy_disk: :sparkles:</p>
 
+#プランとけい
 Plantokei is a golem made up of:
 - An [Arduino Uno](https://www.arduino.cc/en/Main/ArduinoBoardUno)
 - A [SainSmart ST7735](http://www.sainsmart.com/sainsmart-1-8-spi-lcd-module-with-microsd-led-backlight-for-arduino-mega-atmel-atmega.html) LCD
