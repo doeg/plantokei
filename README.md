@@ -58,3 +58,5 @@ $ make monitor
 - Many thanks to <a href="https://twitter.com/vogon" target="_blank">@vogon</a> for the cute name!
 - [Natalie Silvanovich's](http://natashenka.ca/) Tamagotchi-hacking work has been invaluable (and cool as heck)
 - mrt-prodz did [a great write-up](http://www.mrt-prodz.com/blog/view/2015/03/flappy-bird-clone-on-the-atmega328-arduino-uno) on a Flappy Bird clone using the ST7735
+- Jasper van Loenen's awesome [image2cpp](http://javl.github.io/image2cpp/) tool is great for sprite creation
+- Tweaking4all.com's has a great [write-up on the on the ST7735](http://www.tweaking4all.com/hardware/arduino/sainsmart-arduino-color-display/) 
