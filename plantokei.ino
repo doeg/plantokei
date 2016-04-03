@@ -393,28 +393,6 @@ void printSprite() {
   int lastIndex = (animationFrame - 1) % NUM_FRAMES;
   int nextIndex = animationFrame % NUM_FRAMES;
 
-  // When drawing bitmaps with the Adafruit GFX library, each '1' bit in the sprite
-  // sets the corresponding pixel to 'colour,' while each '0' bit is skipped.
-
-  // This means that we need to explicitly overwrite frames that were coloured
-  // in the last frame to be black in the current frame. Otherwise, they will
-  // stay coloured.
-
-  // To do this, we can XOR the last frame and the current frame together.
-  // This will give us a bitmap where each 1 represents a bit that's changing
-  // in the next frame and must be written to black.
-
-  // Finally, we paint new coloured pixels over the pixels that were
-  // previously black.
-
-  // TODO: figure out a way to do this without using up a fuck-ton of memory
-  // unsigned char shadow[2048];
-  // int i;
-  // for(i = 0; i < 2048; i++) {
-  //   shadow[i] = sprites[lastIndex][i] ^ sprites[nextIndex][i];
-  // }
-  // tft.drawBitmap(0, 20, shadow, SPRITE_SIZE, SPRITE_SIZE, ST7735_BLACK);
-
   Serial.print("Printing frame ");
   Serial.print(animationFrame);
   Serial.println();
@@ -422,8 +400,10 @@ void printSprite() {
   tft.setCursor(0, 0);
   tft.setTextColor(ST7735_YELLOW, ST7735_BLACK);
   tft.print(animationFrame);
+  tft.print(" ");
+  tft.print(nextIndex);
 
-  tft.drawBitmap(0, 20, sprites[nextIndex], SPRITE_SIZE, SPRITE_SIZE, ST7735_YELLOW);
+  tft.drawBitmap(0, 20, sprites[nextIndex], SPRITE_SIZE, SPRITE_SIZE, ST7735_YELLOW, ST7735_BLACK);
 }
 
 void playSong() {
