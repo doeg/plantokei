@@ -21,20 +21,9 @@ void playTone();
 void playSong();
 void printSprite();
 
-#if defined(__SAM3X8E__)
-  #undef __FlashStringHelper::F(string_literal)
-  #define F(string_literal) string_literal
-#endif
-
-// Number of screen pixels to equal 1 plantokei pixel
-int px_size = 4;
-
-// Top left x & y coordinates for the sprite
-int sprite_x = 20;
-int sprite_y = 20;
-
 int NUM_FRAMES = 2;
-const unsigned char sprite[2][2048] PROGMEM = {
+int SPRITE_SIZE = 128; // in pixels
+const unsigned char sprites[2][2048] PROGMEM = {
   {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -391,14 +380,43 @@ void printSun(int i, bool fill) {
 
 void printSprite() {
   // Since the sprite animation only ticks once every 100ms, drop the last 0s
-  int spriteFrame = (frames / ANIMATION_TICK) % NUM_FRAMES;
+  int animationFrame = frames / ANIMATION_TICK;
+
+  // Mod the frame by the number of sprites in the animation to get the indices
+  // of the frames. (We need the last frame to be able to get the diff.)
+  int lastIndex = (animationFrame - 1) % NUM_FRAMES;
+  int nextIndex = animationFrame % NUM_FRAMES;
+
+  // When drawing bitmaps with the Adafruit GFX library, each '1' bit in the sprite
+  // sets the corresponding pixel to 'colour,' while each '0' bit is skipped.
+  //
+  // This means that we need to explicitly overwrite frames that were coloured
+  // in the last frame to be black in the current frame. Otherwise, they will
+  // stay coloured.
+  //
+  // To do this, we can XOR the last frame and the current frame together.
+  // This will give us a bitmap where each 1 represents a bit that's changing
+  // in the next frame and must be written to black.
+  unsigned char shadow[2048];
+  int i;
+  for(i = 0; i < 2048; i++) {
+    shadow[i] = sprites[lastIndex][i] ^ sprites[nextIndex][i];
+  }
+  tft.drawBitmap(0, 20, shadow, SPRITE_SIZE, SPRITE_SIZE, ST7735_BLACK);
+
+  // Finally, we paint new coloured pixels over the pixels that were
+  // previously black.
+
+
   Serial.print("Printing frame ");
-  Serial.print(spriteFrame);
+  Serial.print(animationFrame);
   Serial.println();
 
-  // If frame = true, print sprite, else print sprite 1;
+  tft.setCursor(0, 0);
+  tft.setTextColor(ST7735_YELLOW, ST7735_BLACK);
+  tft.print(animationFrame);
 
-  // tft.drawBitmap(0, 0, (frame ? sprite1 : sprite), 128, 128, frame ? ST7735_BLACK : ST7735_YELLOW);
+  tft.drawBitmap(0, 20, sprites[nextIndex], SPRITE_SIZE, SPRITE_SIZE, ST7735_YELLOW);
 }
 
 void playSong() {
