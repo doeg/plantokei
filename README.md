@@ -17,6 +17,8 @@ The following I/O is in the works:
 - Photosynthetically active radiation (a.k.a. PAR)
 - Bluetooth/wifi/Xbee perhaps?
 
+I post lots of photos & updates on Twitter with the <a href="https://twitter.com/search?f=tweets&q=%23plantokei%20from%3Adoeg&src=typd" target="_blank">`#plantokei`</a> hashtag!
+
 ## Developing
 ### Easy Mode
 The easiest way to get going with Plantokei is to load up `plantokei.ino` in the
