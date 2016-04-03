@@ -4,7 +4,7 @@
 ARDUINO_DIR = $(HOME)/Applications/Arduino.app/Contents/Java
 ARDMK_DIR = $(realpath ./libraries/Arduino-Makefile)
 
-ARDUINO_LIBS = SPI Adafruit-GFX-Library Adafruit-ST7735-Library
+ARDUINO_LIBS = Plantokei-Music SPI Adafruit-GFX-Library Adafruit-ST7735-Library
 USER_LIB_PATH =  $(realpath ./libraries)
 
 BOARD_TAG = uno
