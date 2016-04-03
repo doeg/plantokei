@@ -2,7 +2,7 @@
   <img width=420 src="https://pbs.twimg.com/media/Ce-ti2uUAAAjRpa.jpg:large">
 </p>
 
-#plantokei
+# プランとけい // *plantokei*
 :sparkles: :floppy_disk: :herb: plants + arduino = moyashi + tamagotchi :herb: :floppy_disk:
 
 Plantokei is a golem made up of:
