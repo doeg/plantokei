@@ -6,6 +6,7 @@
 #define photocell 0
 #define piezo 9
 
+#include <MemoryFree.h>
 #include <Adafruit_GFX.h>    // Core graphics library
 #include <Adafruit_ST7735.h> // Hardware-specific library
 #include <SPI.h>
@@ -328,7 +329,7 @@ void setup() {
 
   pinMode(piezo, OUTPUT);
   playSong();
-  printSprite();
+  // printSprite();
 }
 
 unsigned long frames = 0;
@@ -337,6 +338,9 @@ void loop() {
   frames += 1L;
 
   if (frames % ANIMATION_TICK == 0) {
+    Serial.print("freeMemory()=");
+    Serial.println(freeMemory());
+
     printSprite();
   }
 
@@ -379,6 +383,8 @@ void printSun(int i, bool fill) {
 }
 
 void printSprite() {
+  Serial.println("Printing sprite!");
+
   // Since the sprite animation only ticks once every 100ms, drop the last 0s
   int animationFrame = frames / ANIMATION_TICK;
 
@@ -389,24 +395,25 @@ void printSprite() {
 
   // When drawing bitmaps with the Adafruit GFX library, each '1' bit in the sprite
   // sets the corresponding pixel to 'colour,' while each '0' bit is skipped.
-  //
+
   // This means that we need to explicitly overwrite frames that were coloured
   // in the last frame to be black in the current frame. Otherwise, they will
   // stay coloured.
-  //
+
   // To do this, we can XOR the last frame and the current frame together.
   // This will give us a bitmap where each 1 represents a bit that's changing
   // in the next frame and must be written to black.
-  unsigned char shadow[2048];
-  int i;
-  for(i = 0; i < 2048; i++) {
-    shadow[i] = sprites[lastIndex][i] ^ sprites[nextIndex][i];
-  }
-  tft.drawBitmap(0, 20, shadow, SPRITE_SIZE, SPRITE_SIZE, ST7735_BLACK);
 
   // Finally, we paint new coloured pixels over the pixels that were
   // previously black.
 
+  // TODO: figure out a way to do this without using up a fuck-ton of memory
+  // unsigned char shadow[2048];
+  // int i;
+  // for(i = 0; i < 2048; i++) {
+  //   shadow[i] = sprites[lastIndex][i] ^ sprites[nextIndex][i];
+  // }
+  // tft.drawBitmap(0, 20, shadow, SPRITE_SIZE, SPRITE_SIZE, ST7735_BLACK);
 
   Serial.print("Printing frame ");
   Serial.print(animationFrame);
