@@ -345,14 +345,9 @@ unsigned long frames = 0;
 void loop() {
   frames += 1L;
 
-  if (frames % 100 == 0) {
-    first = !first;
-    printSprite(first);
-  }
-
-  // int lightLevel = getLightLevel();
-  // printLumens(lightLevel);
-  // delay(100);
+  int lightLevel = getLightLevel();
+  printLumens(lightLevel);
+  delay(100);
 }
 
 int getLightLevel() {
