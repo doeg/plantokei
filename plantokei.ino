@@ -1,10 +1,11 @@
-#define sclk 4
-#define mosi 5
-#define cs   6
-#define dc   7
+#define sclk 13
+#define mosi 11
+#define cs   10
+#define dc   9
 #define rst  8  // you can also connect this to the Arduino reset
 #define photocell 0
-#define piezo 9
+
+#define piezo 2
 
 #include <MemoryFree.h>
 #include <Adafruit_GFX.h>    // Core graphics library
@@ -287,7 +288,10 @@ const unsigned char sprites[2][2048] PROGMEM = {
 };
 
 // Use low-speed display
-Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, mosi, sclk, rst);
+// Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, mosi, sclk, rst);
+
+// Use high-speed display
+Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, rst);
 
 float p = 3.1415926;
 
@@ -298,7 +302,7 @@ int SUN_PADDING = 2;
 
 int LINE_HEIGHT = 10; // pixels
 
-int LINE_SUNS = 140;
+int LINE_SUNS = 150;
 
 int melody[] = { c, e, g, C };
 int beats[] = { 8, 4, 4, 8 };
@@ -314,11 +318,6 @@ int pause = 1000;
 // Loop variable to increase Rest length
 int rest_count = 100; //<-BLETCHEROUS HACK; See NOTES
 
-int ANIMATION_TICK = 10000;
-
-
-bool first = 0;
-
 void setup() {
   Serial.begin(9600);
   Serial.println("hello!");
@@ -329,7 +328,6 @@ void setup() {
 
   pinMode(piezo, OUTPUT);
   playSong();
-  // printSprite();
 }
 
 unsigned long frames = 0;
@@ -337,16 +335,13 @@ unsigned long frames = 0;
 void loop() {
   frames += 1L;
 
-  if (frames % ANIMATION_TICK == 0) {
-    Serial.print("freeMemory()=");
-    Serial.println(freeMemory());
+  Serial.print("freeMemory()=");
+  Serial.println(freeMemory());
 
-    printSprite();
-  }
+  printSprite();
 
-  // int lightLevel = getLightLevel();
-  // printLumens(lightLevel);
-  // delay(100);
+  int lightLevel = getLightLevel();
+  printLumens(lightLevel);
 }
 
 int getLightLevel() {
@@ -385,25 +380,18 @@ void printSun(int i, bool fill) {
 void printSprite() {
   Serial.println("Printing sprite!");
 
-  // Since the sprite animation only ticks once every 100ms, drop the last 0s
-  int animationFrame = frames / ANIMATION_TICK;
-
   // Mod the frame by the number of sprites in the animation to get the indices
   // of the frames. (We need the last frame to be able to get the diff.)
-  int lastIndex = (animationFrame - 1) % NUM_FRAMES;
-  int nextIndex = animationFrame % NUM_FRAMES;
-
-  Serial.print("Printing frame ");
-  Serial.print(animationFrame);
-  Serial.println();
+  int lastIndex = (frames - 1) % NUM_FRAMES;
+  int nextIndex = frames % NUM_FRAMES;
 
   tft.setCursor(0, 0);
   tft.setTextColor(ST7735_YELLOW, ST7735_BLACK);
-  tft.print(animationFrame);
+  tft.print(frames);
   tft.print(" ");
   tft.print(nextIndex);
 
-  tft.drawBitmap(0, 20, sprites[nextIndex], SPRITE_SIZE, SPRITE_SIZE, ST7735_YELLOW, ST7735_BLACK);
+  tft.drawBitmap(0, 10, sprites[nextIndex], SPRITE_SIZE, SPRITE_SIZE, ST7735_YELLOW, ST7735_BLACK);
 }
 
 void playSong() {
