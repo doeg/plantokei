@@ -22,6 +22,7 @@ void printSun(int i, bool fill);
 void playTone();
 void playSong();
 void printSprite();
+void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color, const uint8_t *lastFrame);
 
 int NUM_FRAMES = 2;
 int SPRITE_SIZE = 128; // in pixels
@@ -328,6 +329,7 @@ void setup() {
 
   pinMode(piezo, OUTPUT);
   playSong();
+  tft.drawBitmap(0, 10, sprites[0], SPRITE_SIZE, SPRITE_SIZE, ST7735_YELLOW, ST7735_BLACK);
 }
 
 unsigned long frames = 0;
@@ -335,10 +337,8 @@ unsigned long frames = 0;
 void loop() {
   frames += 1L;
 
-  Serial.print("freeMemory()=");
-  Serial.println(freeMemory());
-
   printSprite();
+  delay(500);
 
   int lightLevel = getLightLevel();
   printLumens(lightLevel);
@@ -378,8 +378,6 @@ void printSun(int i, bool fill) {
 }
 
 void printSprite() {
-  Serial.println("Printing sprite!");
-
   // Mod the frame by the number of sprites in the animation to get the indices
   // of the frames. (We need the last frame to be able to get the diff.)
   int lastIndex = (frames - 1) % NUM_FRAMES;
@@ -391,7 +389,40 @@ void printSprite() {
   tft.print(" ");
   tft.print(nextIndex);
 
-  tft.drawBitmap(0, 10, sprites[nextIndex], SPRITE_SIZE, SPRITE_SIZE, ST7735_YELLOW, ST7735_BLACK);
+  drawBitmap(0, 10, sprites[nextIndex], SPRITE_SIZE, SPRITE_SIZE, ST7735_YELLOW, sprites[lastIndex]);
+}
+
+// foreground color (unset bits are transparent).
+void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color, const uint8_t *lastFrame) {
+
+  int16_t i, j, byteWidth = (w + 7) / 8;
+  uint8_t currentByte, lastByte, maskByte;
+
+  for(j=0; j<h; j++) {
+    for(i=0; i<w; i++) {
+      int16_t offset = j * byteWidth + i / 8;
+
+      if(i & 7) {
+        currentByte <<= 1;
+        lastByte <<= 1;
+      }
+
+      else {
+        currentByte = pgm_read_byte(bitmap + offset);
+        lastByte = pgm_read_byte(lastFrame + offset);
+      }
+
+      maskByte = currentByte ^ lastByte;
+
+      if (maskByte) {
+        tft.drawPixel(x+i, y+j, ST7735_BLACK);
+
+        if (currentByte & 0x80) {
+          tft.drawPixel(x+i, y+j, color);
+        }
+      }
+    }
+  }
 }
 
 void playSong() {
