@@ -51,3 +51,8 @@ $ make && make upload
 ```Bash
 $ make monitor
 ```
+
+## Acknowledgements
+- Many thanks to <a href="https://twitter.com/vogon" target="_blank">@vogon</a> for the cute name!
+- [Natalie Silvanovich's](http://natashenka.ca/) Tamagotchi-hacking work has been invaluable (and cool as heck)
+- mrt-prodz did [a great write-up](http://www.mrt-prodz.com/blog/view/2015/03/flappy-bird-clone-on-the-atmega328-arduino-uno) on a Flappy Bird clone using the ST7735
