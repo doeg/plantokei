@@ -1,9 +1,7 @@
 <p align="center">
   <img width=420 src="https://pbs.twimg.com/media/Ce-ti2uUAAAjRpa.jpg:large">
 </p>
-
-# プランとけい // *plantokei*
-:sparkles: :floppy_disk: :herb: plants + arduino = moyashi + tamagotchi :herb: :floppy_disk:
+<p align="center">:sparkles: :floppy_disk: :herb: <b>プランとけい</b> // <i>plantokei</i> :herb: :floppy_disk: :sparkles:</p>
 
 Plantokei is a golem made up of:
 - An [Arduino Uno](https://www.arduino.cc/en/Main/ArduinoBoardUno)
