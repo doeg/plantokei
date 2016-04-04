@@ -1,18 +1,17 @@
+#define photocell 0
+#define piezo 2
+
+// ST7735 pins
 #define sclk 13
 #define mosi 11
 #define cs   10
 #define dc   9
-#define rst  8  // you can also connect this to the Arduino reset
-#define photocell 0
+#define rst  8
 
-#define piezo 2
-
-#include <MemoryFree.h>
-#include <Adafruit_GFX.h>    // Core graphics library
-#include <Adafruit_ST7735.h> // Hardware-specific library
+#include <Adafruit_GFX.h>
+#include <Adafruit_ST7735.h>
 #include <SPI.h>
 #include <Plantokei_Music.h>
-
 
 void setup();
 void loop();
@@ -101,46 +100,36 @@ const unsigned char sprites[2][2048] PROGMEM = {
 }
 };
 
+// Offset of top-left corner
 uint16_t SPRITE_X = 25;
 uint16_t SPRITE_Y = 25;
 
-// Use low-speed display
-// Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, mosi, sclk, rst);
-
 // Use high-speed display
 Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, rst);
-
-
 
 // faster drawPixel method by inlining calls and using setAddrWindow and pushColor
 // using macro to force inlining
 #define drawPixel(a, b, c) tft.setAddrWindow(a, b, a, b); tft.pushColor(c)
 
-
-float p = 3.1415926;
-
+// Lumens
 bool SUN_FILLS[] = {false, false, false, false, false};
-
 int SUN_RADIUS = 5;
 int SUN_PADDING = 2;
-
-int LINE_HEIGHT = 10; // pixels
-
 int LINE_SUNS = 150;
 
+// Music
 int melody[] = { c, e, g, C };
 int beats[] = { 8, 4, 4, 8 };
-
 int MAX_COUNT = sizeof(melody) / 2; // Melody length, for looping.
-
 int tone_ = 0;
 int beat = 0;
 long duration  = 0;
 long tempo = 10000;
-// Set length of pause between notes
-int pause = 1000;
-// Loop variable to increase Rest length
-int rest_count = 100; //<-BLETCHEROUS HACK; See NOTES
+int pause = 1000; // Set length of pause between notes
+int rest_count = 100; // Loop variable to increase Rest length
+
+// Animation
+unsigned long frames = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -148,14 +137,14 @@ void setup() {
 
   tft.initR(INITR_BLACKTAB);
   tft.fillScreen(ST7735_BLACK);
+
+  tft.drawBitmap(SPRITE_X, SPRITE_Y, sprites[0], SPRITE_SIZE, SPRITE_SIZE, ST7735_YELLOW, ST7735_BLACK);
+
   initSuns();
 
   pinMode(piezo, OUTPUT);
   playSong();
-  tft.drawBitmap(SPRITE_X, SPRITE_Y, sprites[0], SPRITE_SIZE, SPRITE_SIZE, ST7735_YELLOW, ST7735_BLACK);
 }
-
-unsigned long frames = 0;
 
 void loop() {
   frames += 1L;
@@ -217,20 +206,17 @@ void printSprite() {
 
 // foreground color (unset bits are transparent).
 void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color, const uint8_t *lastFrame) {
-
   int16_t i, j, byteWidth = (w + 7) / 8;
   uint8_t currentByte, lastByte, maskByte;
 
-  for(j=0; j<h; j++) {
-    for(i=0; i<w; i++) {
+  for (j = 0; j < h; j++) {
+    for (i = 0; i < w; i++) {
       int16_t offset = j * byteWidth + i / 8;
 
-      if(i & 7) {
+      if (i & 7) {
         currentByte <<= 1;
         lastByte <<= 1;
-      }
-
-      else {
+      } else {
         currentByte = pgm_read_byte(bitmap + offset);
         lastByte = pgm_read_byte(lastFrame + offset);
       }
@@ -238,10 +224,10 @@ void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t 
       maskByte = currentByte ^ lastByte;
 
       if (maskByte) {
-          drawPixel(x+i, y+j, ST7735_BLACK);
+        drawPixel(x+i, y+j, ST7735_BLACK);
 
         if (currentByte & 0x80) {
-            drawPixel(x+i, y+j, color);
+          drawPixel(x+i, y+j, color);
         }
       }
     }
