@@ -19,8 +19,6 @@ int getLightLevel();
 void initSuns();
 void printLumens(int lightLevel);
 void printSun(int i, bool fill);
-void playTone();
-void playSong();
 void printSprite();
 void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color, const uint8_t *lastFrame);
 
@@ -104,6 +102,9 @@ const unsigned char sprites[2][2048] PROGMEM = {
 uint16_t SPRITE_X = 25;
 uint16_t SPRITE_Y = 25;
 
+// Initialize music library
+PlantokeiMusic music(piezo);
+
 // Use high-speed display
 Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, rst);
 
@@ -116,17 +117,6 @@ bool SUN_FILLS[] = {false, false, false, false, false};
 int SUN_RADIUS = 5;
 int SUN_PADDING = 2;
 int LINE_SUNS = 150;
-
-// Music
-int melody[] = { c, e, g, C };
-int beats[] = { 8, 4, 4, 8 };
-int MAX_COUNT = sizeof(melody) / 2; // Melody length, for looping.
-int tone_ = 0;
-int beat = 0;
-long duration  = 0;
-long tempo = 10000;
-int pause = 1000; // Set length of pause between notes
-int rest_count = 100; // Loop variable to increase Rest length
 
 // Animation
 unsigned long frames = 0;
@@ -142,8 +132,7 @@ void setup() {
 
   initSuns();
 
-  pinMode(piezo, OUTPUT);
-  playSong();
+  music.playSong();
 }
 
 void loop() {
@@ -230,44 +219,6 @@ void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t 
           drawPixel(x+i, y+j, color);
         }
       }
-    }
-  }
-}
-
-void playSong() {
-  // Set up a counter to pull from melody[] and beats[]
-  for (int i=0; i<MAX_COUNT; i++) {
-    tone_ = melody[i];
-    beat = beats[i];
-
-    duration = beat * tempo; // Set up timing
-
-    playTone();
-    // A pause between notes...
-    delayMicroseconds(pause);
-  }
-}
-
-void playTone() {
-  long elapsed_time = 0;
-  if (tone_ > 0) { // if this isn't a Rest beat, while the tone has
-    //  played less long than 'duration', pulse speaker HIGH and LOW
-    while (elapsed_time < duration) {
-
-      digitalWrite(piezo,HIGH);
-      delayMicroseconds(tone_ / 2);
-
-      // DOWN
-      digitalWrite(piezo, LOW);
-      delayMicroseconds(tone_ / 2);
-
-      // Keep track of how long we pulsed
-      elapsed_time += (tone_);
-    }
-  }
-  else { // Rest beat; loop times delay
-    for (int j = 0; j < rest_count; j++) { // See NOTE on rest_count
-      delayMicroseconds(duration);
     }
   }
 }
