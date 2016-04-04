@@ -1,3 +1,5 @@
+// The current iteration of this code is largely thanks to
+// http://www.arduino.cc/en/Tutorial/PlayMelody
 #include "Arduino.h"
 #include "Plantokei_Music.h"
 
